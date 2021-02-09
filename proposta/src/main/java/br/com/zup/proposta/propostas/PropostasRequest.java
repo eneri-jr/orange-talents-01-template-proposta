@@ -1,5 +1,6 @@
 package br.com.zup.proposta.propostas;
 
+import br.com.zup.proposta.analise.AnaliseRequest;
 import br.com.zup.proposta.validadores.CPFouCNPJ;
 
 import javax.validation.constraints.Email;
@@ -41,5 +42,9 @@ public class PropostasRequest {
 
    public String getDocumento() {
       return documento;
+   }
+
+   public AnaliseRequest toModelAnalise(Long id) {
+      return new AnaliseRequest(documento, nome, id.toString() );
    }
 }

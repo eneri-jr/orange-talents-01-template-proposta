@@ -34,6 +34,9 @@ public class Proposta {
     @Positive
     private BigDecimal salario;
 
+    @Enumerated(EnumType.STRING)
+    private StatusProposta status;
+
     @Deprecated
     public Proposta() {
 
@@ -49,5 +52,9 @@ public class Proposta {
 
     public Long getId() {
         return id;
+    }
+
+    public void setStatus(StatusProposta status) {
+        this.status = status;
     }
 }
