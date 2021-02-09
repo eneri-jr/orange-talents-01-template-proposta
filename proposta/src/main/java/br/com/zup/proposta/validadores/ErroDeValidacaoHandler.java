@@ -1,5 +1,7 @@
 package br.com.zup.proposta.validadores;
 
+import feign.FeignException;
+import feign.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -35,4 +37,5 @@ public class ErroDeValidacaoHandler {
 
         return dto;
     }
+
 }
