@@ -4,7 +4,6 @@ import br.com.zup.proposta.analise.AnaliseRequest;
 import br.com.zup.proposta.analise.AnaliseResponse;
 import br.com.zup.proposta.analise.AnalisesClient;
 import feign.FeignException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
