@@ -56,6 +56,14 @@ public class Proposta {
         return id;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public StatusProposta getStatus() {
+        return status;
+    }
+
     public void setStatus(StatusProposta status) {
         this.status = status;
     }

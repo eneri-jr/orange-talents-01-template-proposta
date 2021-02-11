@@ -7,14 +7,12 @@ import br.com.zup.proposta.cartao.CartaoClient;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.Optional;
 
@@ -56,5 +54,17 @@ public class PropostasController {
 
         URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
         return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PropostaResponse> detalharProposta(@PathVariable @NotNull Long id) {
+
+        Optional<Proposta> proposta = propostasRepository.findById(id);
+
+        if (!proposta.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(new PropostaResponse(proposta.get()));
+        }
     }
 }
