@@ -37,6 +37,8 @@ public class Proposta {
     @Enumerated(EnumType.STRING)
     private StatusProposta status;
 
+    private String cartao;
+
     @Deprecated
     public Proposta() {
 
@@ -57,4 +59,9 @@ public class Proposta {
     public void setStatus(StatusProposta status) {
         this.status = status;
     }
+
+    public void setCartao(String numeroCartao) {
+        this.cartao = numeroCartao;
+    }
 }
+
