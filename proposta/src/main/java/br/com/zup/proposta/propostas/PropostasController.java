@@ -3,6 +3,7 @@ package br.com.zup.proposta.propostas;
 import br.com.zup.proposta.analise.AnaliseRequest;
 import br.com.zup.proposta.analise.AnaliseResponse;
 import br.com.zup.proposta.analise.AnalisesClient;
+import br.com.zup.proposta.cartao.CartaoClient;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,12 @@ public class PropostasController {
 
     private final PropostasRepository propostasRepository;
     private final AnalisesClient client;
+    private final CartaoClient client2;
 
-    public PropostasController (PropostasRepository propostasRepository, AnalisesClient client) {
+    public PropostasController (PropostasRepository propostasRepository, AnalisesClient client, CartaoClient client2) {
         this.propostasRepository = propostasRepository;
         this.client = client;
+        this.client2 = client2;
     }
 
     @PostMapping
