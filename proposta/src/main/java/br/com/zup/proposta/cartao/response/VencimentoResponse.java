@@ -1,8 +1,5 @@
 package br.com.zup.proposta.cartao.response;
 
-import br.com.zup.proposta.cartao.Cartao;
-import br.com.zup.proposta.cartao.vencimento.Vencimento;
-
 import java.time.LocalDateTime;
 
 public class VencimentoResponse {
@@ -21,9 +18,5 @@ public class VencimentoResponse {
 
     public LocalDateTime getDataDeCriacao() {
         return dataDeCriacao;
-    }
-
-    public Vencimento converter(Cartao cartao) {
-        return new Vencimento(dia, dataDeCriacao, cartao);
     }
 }
