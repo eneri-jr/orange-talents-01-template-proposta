@@ -48,7 +48,7 @@ public class PropostasController {
         try {
             AnaliseResponse resposta = client.analises(analise);
             proposta.setStatus(StatusProposta.ELEGIVEL);
-        }catch (FeignException.FeignClientException e) {
+        }catch (FeignException.UnprocessableEntity e) {
             proposta.setStatus(StatusProposta.NAO_ELEGIVEL);
         }
 
