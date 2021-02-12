@@ -1,31 +1,39 @@
-package br.com.zup.proposta.cartao.parcela;
+package br.com.zup.proposta.cartao.biometria;
 
 import br.com.zup.proposta.cartao.Cartao;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
-public class Parcela {
+public class Biometria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    private int quantidade;
+    private byte[] digital;
 
-    @NotNull
-    private BigDecimal valor;
+    private LocalDate criacao;
 
     @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Cartao.class)
     @JoinColumn(name = "cartao_id")
     private Cartao cartao;
 
-    public Parcela(@NotNull int quantidade, @NotNull BigDecimal valor, Cartao cartao) {
-        this.quantidade = quantidade;
-        this.valor = valor;
+    @Deprecated
+    public Biometria() {
+
+    }
+
+    public Biometria(@NotNull byte[] digital, Cartao cartao) {
+        this.digital = digital;
         this.cartao = cartao;
+        this.criacao = LocalDate.now();
+    }
+
+    public Long getId() {
+        return id;
     }
 }

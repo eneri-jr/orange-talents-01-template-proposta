@@ -1,8 +1,5 @@
 package br.com.zup.proposta.cartao.response;
 
-import br.com.zup.proposta.cartao.Cartao;
-import br.com.zup.proposta.cartao.carteira.Carteira;
-
 import java.time.LocalDateTime;
 
 public class CarteirasResponse {
@@ -26,9 +23,5 @@ public class CarteirasResponse {
 
     public String getEmissor() {
         return emissor;
-    }
-
-    public Carteira converter(Cartao cartao) {
-        return new Carteira(email, associadaEm, emissor, cartao);
     }
 }

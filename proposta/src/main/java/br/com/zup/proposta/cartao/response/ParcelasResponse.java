@@ -1,8 +1,5 @@
 package br.com.zup.proposta.cartao.response;
 
-import br.com.zup.proposta.cartao.Cartao;
-import br.com.zup.proposta.cartao.parcela.Parcela;
-
 import java.math.BigDecimal;
 
 public class ParcelasResponse {
@@ -21,9 +18,5 @@ public class ParcelasResponse {
 
     public BigDecimal getValor() {
         return valor;
-    }
-
-    public Parcela converter(Cartao cartao) {
-        return new Parcela(quantidade, valor, cartao);
     }
 }

@@ -1,7 +1,6 @@
 package br.com.zup.proposta.cartao.response;
 
 import br.com.zup.proposta.cartao.Cartao;
-import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
 
 import java.time.LocalDateTime;
 
@@ -26,9 +25,5 @@ public class BloqueiosResponse {
 
     public boolean isAtivo() {
         return ativo;
-    }
-
-    public Bloqueio converter(Cartao cartao) {
-        return new Bloqueio(bloqueadoEm, sistemaResponsavel, ativo, cartao);
     }
 }
