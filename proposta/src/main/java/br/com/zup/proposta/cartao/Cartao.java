@@ -1,6 +1,7 @@
 package br.com.zup.proposta.cartao;
 
 import br.com.zup.proposta.cartao.biometria.Biometria;
+import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zup.proposta.cartao.response.CartaoResponse;
 
 import javax.persistence.*;
@@ -32,6 +33,9 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Biometria> biometrias = new HashSet<>();
 
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Bloqueio> bloqueios = new HashSet<>();
+
     @Deprecated
     public Cartao() {
 
@@ -48,5 +52,11 @@ public class Cartao {
     public void incluiBiometria(Biometria biometria) {
         this.biometrias.add(biometria);
     }
+    public void incluiBloqueio(Bloqueio bloqueio) {
+        this.bloqueios.add(bloqueio);
+    }
 
+    public Set<Bloqueio> getBloqueios() {
+        return bloqueios;
+    }
 }
