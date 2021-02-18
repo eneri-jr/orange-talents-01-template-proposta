@@ -2,6 +2,7 @@ package br.com.zup.proposta.cartao;
 
 import br.com.zup.proposta.cartao.biometria.Biometria;
 import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
+import br.com.zup.proposta.cartao.carteira.Carteira;
 import br.com.zup.proposta.cartao.response.CartaoResponse;
 import br.com.zup.proposta.cartao.viagem.Viagem;
 
@@ -43,6 +44,9 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Viagem> viagens = new HashSet<>();
 
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Carteira> carteiras = new HashSet<>();
+
     @Deprecated
     public Cartao() {
 
@@ -63,6 +67,7 @@ public class Cartao {
         this.bloqueios.add(bloqueio);
     }
     public void incluiViagem(Viagem viagem) { this.viagens.add(viagem); }
+    public void incluiCarteira(Carteira carteira) { this.carteiras.add(carteira); }
 
     public Set<Bloqueio> getBloqueios() {
         return bloqueios;
@@ -74,5 +79,9 @@ public class Cartao {
 
     public void setStatus(StatusCartao status) {
         this.status = status;
+    }
+
+    public Set<Carteira> getCarteiras() {
+        return carteiras;
     }
 }

@@ -36,7 +36,7 @@ public class ViagemController {
         if(possivelCartao.isPresent()) {
             try {
                 client.cadastraViagem(possivelCartao.get().getNumeroCartao(), request);
-                
+
                 Viagem viagem = request.toModel(possivelCartao.get(), infos.getRemoteAddr(), infos.getHeader("User-Agent"));
                 possivelCartao.get().incluiViagem(viagem);
                 cartaoRepository.save(possivelCartao.get());
