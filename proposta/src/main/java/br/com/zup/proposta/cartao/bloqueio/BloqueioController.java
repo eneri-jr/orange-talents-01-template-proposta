@@ -1,7 +1,10 @@
 package br.com.zup.proposta.cartao.bloqueio;
 
 import br.com.zup.proposta.cartao.Cartao;
+import br.com.zup.proposta.cartao.CartaoClient;
 import br.com.zup.proposta.cartao.CartaoRepository;
+import br.com.zup.proposta.cartao.StatusCartao;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +22,10 @@ import java.util.Set;
 public class BloqueioController {
 
     private final CartaoRepository cartaoRepository;
+    private final CartaoClient client;
 
-    public BloqueioController (CartaoRepository cartaoRepository) {
+    public BloqueioController (CartaoRepository cartaoRepository, CartaoClient client) {
+        this.client = client;
         this.cartaoRepository = cartaoRepository;
     }
 
@@ -40,7 +45,17 @@ public class BloqueioController {
             Bloqueio bloqueio = new Bloqueio(infos.getRemoteAddr(), infos.getHeader("User-Agent"), possivelCartao.get());
             possivelCartao.get().incluiBloqueio(bloqueio);
             cartaoRepository.save(possivelCartao.get());
-            URI location = uriComponentsBuilder.path("/biometria/{id}").buildAndExpand(bloqueio.getId()).toUri();
+
+
+            try {
+                String resposta = client.bloqueiaCartao(possivelCartao.get().getNumeroCartao(), new BloqueioRequest("Sistema"));
+                System.out.println(resposta);
+                possivelCartao.get().setStatus(StatusCartao.BLOQUEADO);
+            }catch (FeignException.UnprocessableEntity e) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            URI location = uriComponentsBuilder.path("/bloqueio/{id}").buildAndExpand(bloqueio.getId()).toUri();
             return ResponseEntity.ok(location);
 
         } else {

@@ -36,6 +36,9 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Bloqueio> bloqueios = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    private StatusCartao status;
+
     @Deprecated
     public Cartao() {
 
@@ -58,5 +61,13 @@ public class Cartao {
 
     public Set<Bloqueio> getBloqueios() {
         return bloqueios;
+    }
+
+    public String getNumeroCartao() {
+        return numeroCartao;
+    }
+
+    public void setStatus(StatusCartao status) {
+        this.status = status;
     }
 }
