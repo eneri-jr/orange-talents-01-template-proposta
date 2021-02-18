@@ -2,6 +2,7 @@ package br.com.zup.proposta.cartao;
 
 import br.com.zup.proposta.cartao.bloqueio.BloqueioRequest;
 import br.com.zup.proposta.cartao.response.CartaoResponse;
+import br.com.zup.proposta.cartao.viagem.ViagemRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,4 +17,7 @@ public interface CartaoClient {
 
     @PostMapping(value = "/{id}/bloqueios")
     String bloqueiaCartao(@PathVariable  String id, BloqueioRequest request);
+
+    @PostMapping(value = "/{id}/avisos")
+    String cadastraViagem(@PathVariable String id, ViagemRequest request);
 }
