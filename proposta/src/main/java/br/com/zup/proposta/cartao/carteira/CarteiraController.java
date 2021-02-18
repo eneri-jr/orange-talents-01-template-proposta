@@ -34,10 +34,16 @@ public class CarteiraController {
     public ResponseEntity<?> cadastrar(@PathVariable @NotNull Long id, @RequestBody @Valid CarteiraRequest request, UriComponentsBuilder uriComponentsBuilder) {
         Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
 
+        Carteiras possivelCarteira = validaNomeCarteira(request.getCarteira());
+
+        if(possivelCarteira == null){
+            return ResponseEntity.badRequest().build();
+        }
+
         if(possivelCartao.isPresent()) {
             Set<Carteira> listaCarteiras = possivelCartao.get().getCarteiras();
             for (Carteira carteira : listaCarteiras) {
-                if(carteira.getNomeCarteira().equals("PAYPAL")) {
+                if(carteira.getCarteira().equals(possivelCarteira)) {
                     return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body("A carteira informada já esta associada neste cartão");
                 }
             }
@@ -45,18 +51,26 @@ public class CarteiraController {
             try {
 
                 CarteirasResponse response = client.cadastraCarteira(possivelCartao.get().getNumeroCartao(), request);
-                Carteira carteira = request.toModel(possivelCartao.get(), response.getId());
+                Carteira carteira = request.toModel(possivelCartao.get(), possivelCarteira, response.getId());
                 possivelCartao.get().incluiCarteira(carteira);
                 cartaoRepository.save(possivelCartao.get());
                 URI location = uriComponentsBuilder.path("/carteira/{id}").buildAndExpand(carteira.getId()).toUri();
                 return ResponseEntity.created(location).build();
 
             }catch (FeignException.UnprocessableEntity e) {
-
                 return ResponseEntity.badRequest().build();
             }
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    private Carteiras validaNomeCarteira(String carteira) {
+        if(carteira.equals(Carteiras.PAYPAL.toString())) {
+            return Carteiras.PAYPAL;
+        }else if(carteira.equals(Carteiras.SAMSUNGPAY.toString())){
+            return Carteiras.SAMSUNGPAY;
+        } else
+            return null;
     }
 }
