@@ -3,6 +3,7 @@ package br.com.zup.proposta.cartao;
 import br.com.zup.proposta.cartao.biometria.Biometria;
 import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zup.proposta.cartao.response.CartaoResponse;
+import br.com.zup.proposta.cartao.viagem.Viagem;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,6 +40,9 @@ public class Cartao {
     @Enumerated(EnumType.STRING)
     private StatusCartao status;
 
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Viagem> viagens = new HashSet<>();
+
     @Deprecated
     public Cartao() {
 
@@ -58,6 +62,7 @@ public class Cartao {
     public void incluiBloqueio(Bloqueio bloqueio) {
         this.bloqueios.add(bloqueio);
     }
+    public void incluiViagem(Viagem viagem) { this.viagens.add(viagem); }
 
     public Set<Bloqueio> getBloqueios() {
         return bloqueios;

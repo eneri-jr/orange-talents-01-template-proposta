@@ -31,7 +31,7 @@ public class BloqueioController {
 
     @PostMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> bloquear(@PathVariable @NotNull Long id, HttpServletRequest infos, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<?> bloquear(@PathVariable @NotNull Long id, HttpServletRequest infos) {
 
         Optional<Cartao> possivelCartao = cartaoRepository.findById(id);
 
@@ -48,15 +48,12 @@ public class BloqueioController {
 
 
             try {
-                String resposta = client.bloqueiaCartao(possivelCartao.get().getNumeroCartao(), new BloqueioRequest("Sistema"));
-                System.out.println(resposta);
+                client.bloqueiaCartao(possivelCartao.get().getNumeroCartao(), new BloqueioRequest("Sistema"));
                 possivelCartao.get().setStatus(StatusCartao.BLOQUEADO);
             }catch (FeignException.UnprocessableEntity e) {
                 return ResponseEntity.badRequest().build();
             }
-
-            URI location = uriComponentsBuilder.path("/bloqueio/{id}").buildAndExpand(bloqueio.getId()).toUri();
-            return ResponseEntity.ok(location);
+            return ResponseEntity.ok().build();
 
         } else {
             return ResponseEntity.notFound().build();
