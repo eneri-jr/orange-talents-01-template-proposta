@@ -1,6 +1,7 @@
 package br.com.zup.proposta.cartao.carteira;
 
 import br.com.zup.proposta.cartao.Cartao;
+import br.com.zup.proposta.cartao.StatusCartao;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,7 +17,8 @@ public class Carteira {
 
     private String email;
 
-    private String nomeCarteira;
+    @Enumerated(EnumType.STRING)
+    private Carteiras carteira;
 
     private LocalDate emissao;
 
@@ -29,11 +31,11 @@ public class Carteira {
 
     }
 
-    public Carteira(String idSistema, String email, String nomeCarteira, Cartao cartao) {
+    public Carteira(String idSistema, String email, Carteiras nomeCarteira, Cartao cartao) {
         this.idSistema = idSistema;
         this.emissao = LocalDate.now();
         this.email = email;
-        this.nomeCarteira = nomeCarteira;
+        this.carteira = nomeCarteira;
         this.cartao = cartao;
     }
 
@@ -41,7 +43,7 @@ public class Carteira {
         return id;
     }
 
-    public String getNomeCarteira() {
-        return nomeCarteira;
+    public Carteiras getCarteira() {
+        return carteira;
     }
 }
