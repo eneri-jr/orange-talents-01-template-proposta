@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-        String jwkSetUri = "http://localhost:18080/auth/realms/nosso-cartao/protocol/openid-connect/certs";
+//        String jwkSetUri = "${keycloak.host}";
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
@@ -19,8 +19,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()).oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
         }
 
-        @Bean
-        JwtDecoder jwtDecoder() {
-            return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
-        }
+//        @Bean
+//        JwtDecoder jwtDecoder() {
+//            return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
+//        }
 }
