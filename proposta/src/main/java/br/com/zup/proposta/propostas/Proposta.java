@@ -1,6 +1,7 @@
 package br.com.zup.proposta.propostas;
 
 import br.com.zup.proposta.validadores.CPFouCNPJ;
+import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,6 +19,7 @@ public class Proposta {
 
     @CPFouCNPJ
     @Column(unique = true)
+    @ColumnTransformer(read = "AES_DECRYPT(UNHEX(documento), 'mySecretKey')", write = "HEX(AES_ENCRYPT(?, 'mySecretKey'))")
     private String documento;
 
     @Email
