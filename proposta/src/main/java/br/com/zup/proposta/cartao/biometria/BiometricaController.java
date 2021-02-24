@@ -35,6 +35,7 @@ public class BiometricaController {
                 possivelCartao.get().incluiBiometria(biometria);
                 cartaoRepository.save(possivelCartao.get());
                 URI location = uriComponentsBuilder.path("/biometria/{id}").buildAndExpand(biometria.getId()).toUri();
+
                 return ResponseEntity.created(location).build();
 
         } else {
