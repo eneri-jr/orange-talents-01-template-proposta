@@ -73,5 +73,6 @@ public class Proposta {
     public void setCartao(String numeroCartao) {
         this.cartao = numeroCartao;
     }
+
 }
 
