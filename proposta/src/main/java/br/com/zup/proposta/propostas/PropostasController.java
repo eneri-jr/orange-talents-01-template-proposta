@@ -3,14 +3,12 @@ package br.com.zup.proposta.propostas;
 import br.com.zup.proposta.analise.AnaliseRequest;
 import br.com.zup.proposta.analise.AnaliseResponse;
 import br.com.zup.proposta.analise.AnalisesClient;
-import br.com.zup.proposta.cartao.CartaoClient;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,12 +21,10 @@ public class PropostasController {
 
     private final PropostasRepository propostasRepository;
     private final AnalisesClient client;
-    private final CartaoClient client2;
 
-    public PropostasController (PropostasRepository propostasRepository, AnalisesClient client, CartaoClient client2) {
+    public PropostasController (PropostasRepository propostasRepository, AnalisesClient client) {
         this.propostasRepository = propostasRepository;
         this.client = client;
-        this.client2 = client2;
     }
 
     @PostMapping
@@ -44,7 +40,7 @@ public class PropostasController {
         Proposta proposta = propostasRequest.toModel();
         propostasRepository.save(proposta);
 
-        AnaliseRequest analise = propostasRequest.toModelAnalise(proposta.getId());
+        AnaliseRequest analise = propostasRequest.toModelAnalise(proposta);
 
         try {
             AnaliseResponse resposta = client.analises(analise);

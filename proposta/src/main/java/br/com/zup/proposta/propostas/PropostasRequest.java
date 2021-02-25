@@ -44,7 +44,23 @@ public class PropostasRequest {
       return documento;
    }
 
-   public AnaliseRequest toModelAnalise(Long id) {
-      return new AnaliseRequest(documento, nome, id.toString() );
+   public String getEmail() {
+      return email;
+   }
+
+   public String getNome() {
+      return nome;
+   }
+
+   public String getEndereco() {
+      return endereco;
+   }
+
+   public BigDecimal getSalario() {
+      return salario;
+   }
+
+   public AnaliseRequest toModelAnalise(Proposta proposta) {
+      return new AnaliseRequest(documento, nome, proposta.getId().toString() );
    }
 }
