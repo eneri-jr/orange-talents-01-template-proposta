@@ -40,13 +40,14 @@ public class PropostasController {
         Proposta proposta = propostasRequest.toModel();
         propostasRepository.save(proposta);
 
-        AnaliseRequest analise = propostasRequest.toModelAnalise(proposta);
-
         try {
+            AnaliseRequest analise = propostasRequest.toModelAnalise(proposta);
             AnaliseResponse resposta = client.analises(analise);
             proposta.setStatus(StatusProposta.ELEGIVEL);
         }catch (FeignException.UnprocessableEntity e) {
             proposta.setStatus(StatusProposta.NAO_ELEGIVEL);
+        }catch (NullPointerException e) {
+            return ResponseEntity.badRequest().body("Proposta não encontrada");
         }
 
         URI location = uriComponentsBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri();
