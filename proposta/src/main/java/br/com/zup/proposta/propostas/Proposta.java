@@ -74,5 +74,8 @@ public class Proposta {
         this.cartao = numeroCartao;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
 
